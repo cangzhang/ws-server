@@ -1,5 +1,6 @@
 defmodule MinimalServer.Endpoint do
   use Plug.Router
+  require Logger
 
   plug(:match)
   plug(Plug.Parsers, parsers: [:json], json_decoder: Poison)
@@ -22,6 +23,15 @@ defmodule MinimalServer.Endpoint do
     }
   end
 
-  def start_link(_opts),
-    do: Plug.Adapters.Cowboy.http(__MODULE__, [])
+  def start_link(_opts) do
+    # port = "PORT" |> System.get_env() |> String.to_integer()
+    port = 4000
+    Logger.info("Starting server at http://localhost:#{port}")
+
+    Plug.Adapters.Cowboy.http(
+      __MODULE__,
+      [],
+      port: port
+    )
+  end
 end
