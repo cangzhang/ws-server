@@ -1,5 +1,6 @@
 defmodule MinimalServer.Endpoint do
   use Plug.Router
+  use Plug.ErrorHandler
   require Logger
 
   plug(:match)
@@ -24,8 +25,7 @@ defmodule MinimalServer.Endpoint do
   end
 
   def start_link(_opts) do
-    # port = "PORT" |> System.get_env() |> String.to_integer()
-    port = 4000
+    port = cowboy_port()
     Logger.info("Starting server at http://localhost:#{port}")
 
     Plug.Adapters.Cowboy.http(
@@ -33,5 +33,17 @@ defmodule MinimalServer.Endpoint do
       [],
       port: port
     )
+  end
+
+  defp cowboy_port do
+    Application.get_env(:minimal_server, :cowboy_port, 4000)
+  end
+
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
+    IO.inspect(kind, label: :kind)
+    IO.inspect(reason, label: :reason)
+    IO.inspect(stack, label: :stack)
+
+    send_resp(conn, conn.status, "something went wrong.")
   end
 end
