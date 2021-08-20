@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :minimal_server, cowboy_port: 4000
+config :minimal_server, cowboy_port: 4000,

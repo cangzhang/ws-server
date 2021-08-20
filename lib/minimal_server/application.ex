@@ -20,7 +20,8 @@ defmodule MinimalServer.Application do
           dispatch: dispatch(),
           port: cowboy_port()
         ]
-      )
+      ),
+      MinimalServer.Repo
     ]
   end
 

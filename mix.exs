@@ -25,7 +25,9 @@ defmodule MinimalServer.MixProject do
       {:poison, "~> 3.0"},
       {:plug, "~> 1.6"},
       {:cowboy, "~> 2.4"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:ecto_sql, "~> 3.2"},
+      {:postgrex, "~> 0.15"}
     ]
   end
 end
